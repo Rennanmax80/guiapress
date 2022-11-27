@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require("dotenv/config")
 const bodyParser = require("body-parser")
+const session = require("express-session")
 
 const connection = require("./database/database")
 
@@ -15,6 +16,11 @@ const User = require("./user/User.model")
 const app = express()
 
 app.set('view engine', 'ejs')
+
+//session
+app.use(session({
+    secret: "ksd83jJ@!L485aa2++**asdk33`sad3#SS", cookie: {maxAge: 30000000}
+}))
 
 
 app.use(express.static('public'))
@@ -31,6 +37,7 @@ connection.authenticate().then(() => {
 app.use("/", categoriesController)
 app.use("/", articlesController)
 app.use("/", UsersController)
+
 
 app.get("/", (req, res) => {
 
